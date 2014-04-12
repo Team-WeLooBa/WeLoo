@@ -2,8 +2,10 @@ var express = require('express');
 var webot_lib = require('weixin-robot');
 var log = require('debug')('weloo:log');
 var verbose = require('debug')('weloo:verbose');
-var secret = require('./private/secret.js');
 
+var secret = require('./private/secret.js');
+//New Relic Monitoring
+require('newrelic');
 
 // 启动服务
 var app = express();
