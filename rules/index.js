@@ -14,7 +14,7 @@ var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL||
 var collecions = ["language"];
 
 //A blocking library enable us to wait for API response
-var httpsync = require('httpsync');
+// var httpsync = require('httpsync');
 var moment = require('moment');
 var moment_timezone =  require('moment-timezone');
 
@@ -30,6 +30,7 @@ module.exports = exports = function(webot){
   webot.loads('./uwaterloo/terms/exam_schedule');
   webot.loads('./weather/weather');
   webot.loads('./uwaterloo/food/food_services');
+  webot.loads('./eatWhat/eat_what');
 
   var reg_help = /^(help|\?|帮助)\s*/i
   webot.set({
