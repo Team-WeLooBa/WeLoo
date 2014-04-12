@@ -7,7 +7,7 @@ var utils = require('../../utils/utils.js');
 
 module.exports = function(webot){
   webot.set('random restaurant',{
-  description:'Random: 随机查询参观',
+  description:'Random: 随机查询餐馆',
   pattern: /(吃啥)/,
   handler: function(info,next){
     var database = mongo.connect(mongoUri,collecions,function(err, db){
