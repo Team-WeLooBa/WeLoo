@@ -3,7 +3,6 @@ var webot_lib = require('weixin-robot');
 var log = require('debug')('weloo:log');
 var verbose = require('debug')('weloo:verbose');
 
-var secret = require('./private/secret.js');
 //New Relic Monitoring
 require('newrelic');
 
@@ -11,9 +10,8 @@ require('newrelic');
 var app = express();
 
 // 实际使用时，这里填写你在微信公共平台后台填写的 token
-// FIXME: remove second token?
-var tokenName = secret.wechatServerToken[0];
-var wx_token = process.env.WX_TOKEN || tokenName;
+tokenName = 'test_wechat_token'; //for local testing only
+var wx_token = process.env.WX_TOKEN || tokenName; //heroku env config will override tokenName
 
 // 建立多个实例，并监听到不同 path, 目前对应不同语言
 var webot_en_us = new webot_lib.Webot({'lang':'en_us'});

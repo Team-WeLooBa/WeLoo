@@ -1,10 +1,9 @@
 //A simple wrapper class for UW Open API endpoint
-var apiToken = require('../private/secret.js');
 // Constructor
 function UWApi() {
   // always initialize all instance properties
   this.host = 'http://api.uwaterloo.ca/v2/';
-  this.token = apiToken.uwApiToken;
+  this.token = process.env.UW_API_TOKEN;
   this.rest = require('restler');
 }
 
