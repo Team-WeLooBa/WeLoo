@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="WeLoo 微卢 : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>WeLoo 微卢</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Team-WeLooBa/WeLoo">View on GitHub</a>
+
+          <h1 id="project_title">WeLoo 微卢</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Team-WeLooBa/WeLoo/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Team-WeLooBa/WeLoo/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="weloo-%E5%BE%AE%E5%8D%A2---a-webot-application-" class="anchor" href="#weloo-%E5%BE%AE%E5%8D%A2---a-webot-application-"><span class="octicon octicon-link"></span></a>WeLoo 微卢 - A <a href="https://github.com/node-webot/weixin-robot">Webot</a> Application <a href="https://travis-ci.org/node-webot/webot-example"><img src="https://api.travis-ci.org/node-webot/webot-example.png?branch=master" alt="Build Status"></a>
+</h1>
+
+<ul>
+<li>WeChat Account (English): wewaterloo</li>
+<li>微信账号 (中文): wewaterloo_cn</li>
+</ul><p>WeLoo is an open WeChat plaform for University of Waterloo students, the server side is built by Team WelooBa at 2014 Water Hackathon. The platform is providing specific searching service for university student.</p>
+
+<p>微卢是一个面向滑铁卢大学学生的微信公众账号，由WeLooBa团队成猿在2014 Water Hackathon中开发完成后台。主要提供面向大学生的信息查询服务。</p>
+
+<h2>
+<a name="functions-%E5%8A%9F%E8%83%BD" class="anchor" href="#functions-%E5%8A%9F%E8%83%BD"><span class="octicon octicon-link"></span></a>Functions 功能</h2>
+
+<ul>
+<li>Exam Schedule Lookup 考试信息查询</li>
+<li>Food Services Open Hours, Menu, and Location Lookup 学校餐饮服务信息查询</li>
+<li>Waterloo Weather Information 滑铁卢天气信息查询</li>
+<li>More Functions are Developing... 更多功能开发中...</li>
+</ul><h2>
+<a name="run-on-local-machine-%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8C" class="anchor" href="#run-on-local-machine-%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8C"><span class="octicon octicon-link"></span></a>Run on Local Machine 本地运行</h2>
+
+<div class="highlight highlight-bash"><pre>git clone https://github.com/slovey528/WeLoo.git
+<span class="nb">cd </span>WeLoo/
+npm install
+make start
+</pre></div>
+
+<p>Use <code>make start</code> to run <code>node app.js</code>. 使用<code>make start</code> 命令会调用 <code>node app.js</code> 。</p>
+
+<h2>
+<a name="message-test-%E6%B6%88%E6%81%AF%E8%B0%83%E8%AF%95" class="anchor" href="#message-test-%E6%B6%88%E6%81%AF%E8%B0%83%E8%AF%95"><span class="octicon octicon-link"></span></a>Message Test 消息调试</h2>
+
+<p>Use <a href="https://github.com/node-webot/webot-cli"><code>webot-cli</code></a> command line tool to test the message.
+使用 <a href="https://github.com/node-webot/webot-cli"><code>webot-cli</code></a> 命令行工具来发送测试消息。</p>
+
+<p>For more information about <a href="https://github.com/node-webot/weixin-robot">wechat-robot</a> and how to <a href="https://github.com/node-webot/webot-cli">test</a>, please go to the github page.</p>
+
+<h2>
+<a name="team-welooba-%E5%BC%80%E5%8F%91%E8%80%85" class="anchor" href="#team-welooba-%E5%BC%80%E5%8F%91%E8%80%85"><span class="octicon octicon-link"></span></a>Team WelooBa 开发者</h2>
+
+<ul>
+<li><a href="http://slovey528.github.io">Jerry Mao</a></li>
+<li><a href="https://github.com/y88huang">Ken Huang</a></li>
+<li><a href="http://gyfelton.github.io">Elton Gao</a></li>
+<li><a href="http://xuefei-frank.com">Frank Li</a></li>
+<li><a href="https://github.com/mellwa">Chao Chen</a></li>
+<li><a href="https://github.com/iJuliet">Irene Jiang</a></li>
+</ul><h2>
+<a name="credit" class="anchor" href="#credit"><span class="octicon octicon-link"></span></a>Credit</h2>
+
+<ul>
+<li><p>University of Waterloo Open Data</p></li>
+<li><p><a href="https://github.com/node-webot/weixin-robot">weixin-robot</a>, 
+<a href="https://github.com/node-webot/weixin-robot/tree/0.0.x">Original Version</a> developed by <a href="https://github.com/ktmud">@ktmud</a>, 
+<a href="https://github.com/atian25">@atian</a> refactored and finished version 0.2.</p></li>
+<li><p><a href="https://github.com/node-webot/weixin-robot">weixin-robot</a> used <a href="https://github.com/node-webot/wechat">wechat</a> developed by <a href="https://github.com/JacksonTian">@JacksonTian</a>.</p></li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">WeLoo 微卢 maintained by <a href="https://github.com/Team-WeLooBa">Team-WeLooBa</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
