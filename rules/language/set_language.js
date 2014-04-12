@@ -2,8 +2,9 @@ var uwapi = require('../../utils/uwapi');
 var utils = require('../../utils/utils');
 
 var mongo = require('mongodb');
+var secret = require('../../private/secret.js');
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL||
-            'mongodb://y88huang:123456@oceanic.mongohq.com:10087/app23211056';
+            secret.dataBaseInfo;
 var collecions = ["language"];
 
 module.exports = function(webot) {

@@ -31,8 +31,8 @@ module.exports = function(webot) {
     try{
       var subjects = info.text.match(/\D+/g);
       var catalogNums = info.text.match(/\d+/g);
-      console.info("Subjects: " + subjects);
-      console.info("Course Numbers: " + catalogNums);
+      // console.info("Subjects: " + subjects);
+      // console.info("Course Numbers: " + catalogNums);
 
       var requestCounter = subjects.length;
       var titles = new Array();
