@@ -3,7 +3,7 @@ var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL||
             'mongodb://y88huang:123456@oceanic.mongohq.com:10087/app23211056';
 var collecions = ["language","restaurant"];
 var utils = require('../../utils/utils.js');
-
+var myFriend = ", 我的朋友";
 
 module.exports = function(webot){
   webot.set('random restaurant',{
@@ -21,7 +21,7 @@ module.exports = function(webot){
                var name = callback[0]['name'];
                var replyText = utils.dynamicReplyArray[Math.floor(Math.random()*((utils.dynamicReplyArray.length)))];
                // console.log(utils.dynamicReplyArray.length);
-               replyText = replyText + name + ", 我的朋友";
+               replyText = replyText + name + myFriend;
                next(null,replyText);
                 });});
           
