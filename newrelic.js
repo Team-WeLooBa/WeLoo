@@ -8,7 +8,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['Weloo'],
+  app_name : ['Weloo-test'],
   /**
    * Your New Relic license key.
    */
