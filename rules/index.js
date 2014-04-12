@@ -10,9 +10,8 @@ var geo2loc = require('../lib/support').geo2loc;
 var package_info = require('../package.json');
 var mongo = require('mongodb');
 var secret = require('../private/secret.js');
-var tokenName = ''+secret.dataBaseInfo;
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL||
-            tokenName;
+            secret.dataBaseInfo;
 var collecions = ["language"];
 
 //A blocking library enable us to wait for API response

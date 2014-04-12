@@ -4,7 +4,7 @@ var apiToken = require('../private/secret.js');
 function UWApi() {
   // always initialize all instance properties
   this.host = 'http://api.uwaterloo.ca/v2/';
-  this.token = apiToken.api;
+  this.token = apiToken.uwApiToken;
   this.rest = require('restler');
 }
 

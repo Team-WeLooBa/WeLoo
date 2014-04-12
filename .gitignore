@@ -1,5 +1,5 @@
 node_modules/
-private/
+private/secret.js
 *.swp
 .DS_Store
 lib-cov

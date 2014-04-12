@@ -10,7 +10,7 @@ var app = express();
 
 // 实际使用时，这里填写你在微信公共平台后台填写的 token
 // FIXME: remove second token?
-var tokenName = secret.token[0];
+var tokenName = secret.wechatServerToken[0];
 var wx_token = process.env.WX_TOKEN || tokenName;
 
 // 建立多个实例，并监听到不同 path, 目前对应不同语言
