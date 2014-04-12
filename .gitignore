@@ -1,4 +1,5 @@
 node_modules/
+private/
 *.swp
 .DS_Store
 lib-cov
