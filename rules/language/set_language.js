@@ -1,6 +1,6 @@
 var uwapi = require('../../utils/uwapi');
 var utils = require('../../utils/utils');
-var redis_client = require('../../utils/redis').initialize();
+// var redis_client = require('../../utils/redis').initialize();
 var mongo = require('mongodb');
 
 var mongoUri = process.env.MONGO_TEST_URI || process.env.MONGO_PROD_URI; //test URI will override PROD URI!
