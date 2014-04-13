@@ -18,7 +18,6 @@ var moment = require('moment');
 var moment_timezone =  require('moment-timezone');
 
 var utils = require('../utils/utils.js');
-// var redis = require('../utils/redis.js').initialize();
 
 /**
  * 初始化路由规则
@@ -26,10 +25,12 @@ var utils = require('../utils/utils.js');
 
 module.exports = exports = function(webot){
   
+
   webot.loads('./uwaterloo/terms/exam_schedule');
   webot.loads('./weather/weather');
   webot.loads('./uwaterloo/food/food_services');
   webot.loads('./eatWhat/eat_what');
+  // webot.loads('language/set_language');
 
   var reg_help = /^(help|\?|帮助)\s*/i
   webot.set({
@@ -180,51 +181,57 @@ module.exports = exports = function(webot){
   });
   
 
-  webot.set('set language',{
-    description: '发送: 重新设置语言',
-    pattern: /^(l|L)anguage/,
-    handler: function(info){
-      var rep = "1.English, 2.中文";
-      info.wait('reset_lang');
-      return rep;
-    }
-  });
+//   webot.set('set language',{
+//     description: '发送: 重新设置语言',
+//     pattern: /^(l|L)anguage/,
+//     handler: function(info){
+//       var rep = "1.English, 2.中文";
+//       info.wait('reset_lang');
+//       return rep;
+//     }
+//   });
 
 
-  webot.waitRule('reset_lang',function(info,next){
-      var database = mongo.connect(mongoUri,collecions,function(err, db) {
-      db.collection("language",function(err,collection){
-        if(!err) {
-        var userName = info.uid;
-        var obj = {};
-          obj[userName] = {$exists:true};
-         // info.wait("language");
-      collection.find(obj).toArray(function(err,results){
-        var objText={};
-        var command = Number(info.text);
-        if(command==1){
-          command='EN';
-          webot.config.lang = "en_us";
-        }
-        else if(command==2){
-          command='CN';
-          webot.config.lang = "zh_cn";
-        }
-        objText[userName]=command;
-        if(results.length==0){
-          next(null,"咦？发生了奇怪的事情");
-        }
-        else{
-          collection.update(obj,objText,function(err,re){});
+// webot.waitRule('reset_lang',function(info,next){
+//         var database = mongo.connect(mongoUri,collecions,function(err, db) {
+//             db.collection("language",function(err,collection){
+//                 if(!err) {
+//                     var userName = info.uid;
+//                     var obj = {};
+//                     obj[userName] = {
+//                         $exists:true
+//                     };
+//                     // info.wait("language");
+//                     collection.find(obj).toArray(function(err,results){
+//                         var objText={};
+//                         var command = Number(info.text);
+//                         if(command==1){
+//                             command='EN';
+//                             webot.config.lang = "en_us";
+//                         }
+//                         else if(command==2){
+//                             command='CN';
+//                             webot.config.lang = "zh_cn";
+//                         }
+//                         objText[userName]=command;
+//                         if(results.length==0){
+//                             next(null,"咦？发生了奇怪的事情");
+//                         }
+//                         else{
+//                             collection.update(obj,objText,function(err,re){});
 
-          var reply = utils.localizedText(webot, 
-        {
-          'en_us' : 'Welcome WeLoo! use \'help\' to get more information',
-          'zh_cn' : '欢迎使用微信公众平台,输入Help获取帮助'
-        });
-         next(null, reply);
-        }
-      })}})})});
+//                             var reply = utils.localizedText(webot, 
+//                             {
+//                                 'en_us' : 'Welcome WeLoo! use \'help\' to get more information',
+//                                 'zh_cn' : '欢迎使用微信公众平台,输入Help获取帮助'
+//                             });
+//                             next(null, reply);
+//                         }
+//                     });
+//                 }
+//             });
+//         });
+// });
      
 
 webot.set('map',{
