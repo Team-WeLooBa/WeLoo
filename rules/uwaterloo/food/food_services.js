@@ -105,7 +105,10 @@ module.exports = function(webot) {
 	webot.waitRule('choose', function(info, next) {
 		info = utils.sanitizeInfo(info);
 		var text = Number(info.text);
-		if (text == 1) {
+		if (utils.findCommand(info.text)) {
+			console.log('Next Command is: '+info.text);
+      next();
+		} else if (text == 1) {
 			var food_list = new Array();
 			var sequence;
 			for (var i = 0; i < foodName.length; i++) {

@@ -32,40 +32,30 @@ module.exports = exports = function(webot){
   webot.loads('./eatWhat/eat_what');
   // webot.loads('language/set_language');
 
-  var reg_help = /^(help|\?|帮助)\s*/i
   webot.set({
-    description: 'Use \'help\' command to get guidance',
+    description: 'Welcome page',
     pattern: function(info) {
-      //首次关注时,会收到subscri event
-      return info.is('event') && info.param.event === 'subscribe' || reg_help.test(info.text);
+      return info.is('event') && info.param.event === 'subscribe';
     },
     handler: function(info, next){
       var reply_cn = {
-        title: '感谢你关注「微卢」公众平台',
-        pic: 'https://raw.githubusercontent.com/slovey528/WeLoo/master/qrcode_weloo_cn.jpg',
-        url: 'http://slovey528.github.io/WeLoo/',
+        title: '感谢关注「微卢」',
+        pic: 'http://i.imgur.com/YWiWlYj.png?1?9930',
+        url: 'http://team-welooba.github.io/WeLoo',
         description: [
-          '你可以试试以下指令:',
-          '「考试」: 查询期末考试时间与地点',
-          '「用餐」: 查询学校用餐地点与时间',
-          '「天气」: 查询当前天气,温度等情况',
-          '「语言」: 设置公众平台语言',
-          '「帮助」: 重新查看本指令界面',
-          '平台还在测试中,欢迎大家多提意见',
-          '点击「查看全文」至GitHub源代码页'
-        ].join('\n')
+          '饿了吗？来这里看看吃什么吧',
+          '要期末了吗？来这里看看在哪儿考吧',
+          '无聊了吗？来这里猜猜数字吧\n',
+          '输入「Help」查看指令列表',
+          '平台仍在测试中，欢迎大家多提意见',
+          '点击「查看全文」至GitHub源代码页'].join('\n')
       };
       var reply_en = {
         title: 'Welcome to 「WeLoo」',
-        pic: 'https://raw.githubusercontent.com/slovey528/WeLoo/master/qrcode_weloo_cn.jpg',
-        url: 'http://slovey528.github.io/WeLoo/',
+        pic: 'http://i.imgur.com/YWiWlYj.png?1?9930',
+        url: 'http://team-welooba.github.io/WeLoo',
         description: [
-          'WeLoo Command List:',
-          '「Exam」: Check Final Ecam Schedule',
-          '「Weather」: Waterloo Current Weather',
-          '「Food」: Food Services Open Hours',
-          '「Language」: Set Account Language',
-          '「Help」: Read This Message Again',
+          'Enter「Help」to Start',
           'Click「Read All」to WeLoo GitHub Page'
         ].join('\n')
       };
@@ -75,6 +65,40 @@ module.exports = exports = function(webot){
           'zh_cn' : reply_cn
         });
       next(null,reply);
+    }
+  });
+
+  webot.set({
+    pattern: /^(help)\s*/i,
+    handler: function(info, next){
+      var reply_cn = {
+        title: '指令列表',
+        description: [
+          '你可以试试以下指令:',
+          '「Exam」: 查询期末考试时间与地点',
+          '「Food」: 查询学校用餐地点与时间',
+          '「Lan」 : 设置公众平台语言',
+          '「Help」: 重新查看本指令界面',
+          '「Weather」: 查询当前天气情况',
+        ].join('\n')
+      };
+      var reply_en = {
+        title: 'Command List',
+        description: [
+          'WeLoo Command List:',
+          '「Exam」: Check Final Ecam Schedule',
+          '「Food」: Food Services Open Hours',
+          '「Lan」 : Set Account Language',
+          '「Help」: Read This Message Again',
+          '「Weather」: Waterloo Current Weather'
+        ].join('\n')
+      };
+      var reply = utils.localizedText(webot,
+        {
+          'en_us' : reply_en,
+          'zh_cn' : reply_cn
+        });
+      next(null, reply);
     }
   });
 
