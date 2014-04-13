@@ -19,7 +19,7 @@ WeLoo is an open WeChat plaform for University of Waterloo students, the server 
 git clone https://github.com/slovey528/WeLoo.git
 cd WeLoo/
 npm install
-make start
+make start UW_API_TOKEN=TOKEN MONGO_TEST_URI=mongodb://username:password@oceanic.mongohq.com:10087/app_sample
 ```
 Use `make start` to run `node app.js`. 使用`make start` 命令会调用 `node app.js` 。
 
