@@ -1,5 +1,5 @@
 node_modules/
-private/secret_env_setting.sh
+secret_env_setting.sh
 *.swp
 .DS_Store
 lib-cov

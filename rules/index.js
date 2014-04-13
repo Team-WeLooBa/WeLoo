@@ -9,7 +9,7 @@ var search = require('../lib/support').search;
 var geo2loc = require('../lib/support').geo2loc;
 var package_info = require('../package.json');
 var mongo = require('mongodb');
-var mongoUri = process.env.MONGO_TEST_URI || process.env.MONGO_PROD_URL; //test URI will override PROD URI!
+var mongoUri = process.env.MONGO_TEST_URI || process.env.MONGO_PROD_URI; //test URI will override PROD URI!
 var collecions = ["language"];
 
 //A blocking library enable us to wait for API response

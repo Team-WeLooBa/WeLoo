@@ -52,16 +52,19 @@ module.exports = function(webot) {
               var sections = data['sections'];
               var result = new Array();
               result.push(course+":");
-              for (var i = 0; i < sections.length; i++) {
-                var section = sections[i]['section'];
-                var day = sections[i]['day'];
-                var date = sections[i]['date'];
-                var start = sections[i]['start_time'];
-                var end = sections[i]['end_time'];
-                var location = sections[i]['location'];
-                var exam = 'Section: '+section+', '+location;
-                result.push(exam);
-              }
+              if (sections != null) {
+                for (var i = 0; i < sections.length; i++) {
+                  var section = sections[i]['section'];
+                  var day = sections[i]['day'];
+                  var date = sections[i]['date'];
+                  var start = sections[i]['start_time'];
+                  var end = sections[i]['end_time'];
+                  var location = sections[i]['location'];
+                  var exam = 'Section: '+section+', '+location;
+                  result.push(exam);
+                }
+              };
+              
               titles.push(course+'\n'+date+' '+day+'\n'+start+' - '+end);
               descriptions.push(result.join('\n'));
 

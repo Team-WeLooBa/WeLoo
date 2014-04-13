@@ -2,7 +2,7 @@ var uwapi = require('../../utils/uwapi');
 var utils = require('../../utils/utils');
 
 var mongo = require('mongodb');
-var mongoUri = process.env.MONGO_TEST_URI || process.env.MONGO_PROD_URL; //test URI will override PROD URI!
+var mongoUri = process.env.MONGO_TEST_URI || process.env.MONGO_PROD_URI; //test URI will override PROD URI!
 var collecions = ["language"];
 
 module.exports = function(webot) {
