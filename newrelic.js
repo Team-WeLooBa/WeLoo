@@ -8,11 +8,12 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['Weloo-test'],
+  app_name : ['Weloo-prod'],
   /**
    * Your New Relic license key.
    */
-  license_key : 'b839f2eda45a054b6d79bc75ab90e35e095bd61a',
+   //Licence key is in heroku env
+   
   logging : {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
