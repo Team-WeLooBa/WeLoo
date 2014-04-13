@@ -36,6 +36,7 @@ For more information about [wechat-robot](https://github.com/node-webot/weixin-r
 - [Elton Gao](http://gyfelton.github.io)
 - [Frank Li](http://xuefei-frank.com)
 - [Chao Chen](https://github.com/mellwa)
+- [Irene Jiang](https://github.com/iJuliet)
 
 ## Credit
 - University of Waterloo Open Data
