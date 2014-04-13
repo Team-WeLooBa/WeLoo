@@ -1,4 +1,4 @@
-var commands = [/^(exam|考试)/i, /^(weather|天气)/i, /^(food|用餐)/i, /^(language|语言)/i, /^(help|帮助)/i];
+var commands = [/^(exam|考试)/i, /^(weather|天气)/i, /^(food|用餐)/i, /^(language|语言)/i, /^(help|帮助)/i, /^(吃啥)/];
 
 exports.isEmptyObject = function (obj) {
 	return !Object.keys(obj).length;

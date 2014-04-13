@@ -9,6 +9,7 @@ module.exports = function(webot){
   description:'Random: 随机查询餐馆',
   pattern: /(吃啥)/,
   handler: function(info,next){
+    info = utils.sanitizeInfo(info);
     var database = mongo.connect(mongoUri,collecions,function(err, db){
          db.collection("restaurant",function(err,collection){
           // collection.find().toArray(function(err,cb){

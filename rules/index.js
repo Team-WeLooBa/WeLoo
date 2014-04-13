@@ -33,7 +33,7 @@ module.exports = exports = function(webot){
   // webot.loads('language/set_language');
 
   webot.set({
-    description: 'Welcom page',
+    description: 'Welcome page',
     pattern: function(info) {
       return info.is('event') && info.param.event === 'subscribe';
     },
