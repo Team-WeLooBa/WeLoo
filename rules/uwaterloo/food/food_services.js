@@ -33,7 +33,7 @@ var foodLocation = ['Davis Centre - DC','Dana Porter Library - DP','Student Life
 										'Village 1 - V1','PAS Building - PAS','B.C. Matthews Hall - BMH',
 										'Needles Hall - NH','Tatham Centre - TC','Ron Eydt Village - REV'];
 
-var matchFoodByName = function (num, data) {
+var matchFoodByName = function (webot, num, data) {
 	var name = foodName[num-1];
 	var data = data['data'];
 	var food_array = new Array();
@@ -47,7 +47,10 @@ var matchFoodByName = function (num, data) {
 				food_info.longitude = data[i]['longitude'];
 				var now = moment_timezone().tz('America/Toronto').format('dddd').toLowerCase();
 				if (data[i]['opening_hours'][now]['is_closed'] == true) {
-					reply = food_info.loc+': '+'Closed for Today'
+					reply = food_info.loc+utils.localizedText(webot, {
+						'en_us' : ': Closed for Today My Friend!',
+						'zh_cn' : ': 今日不开门哦亲！'
+					});
 				} else {
 					var open = data[i]['opening_hours'][now]['opening_hour'];
 					var close = data[i]['opening_hours'][now]['closing_hour'];
@@ -65,7 +68,7 @@ var matchFoodByName = function (num, data) {
 	return res;
 }
 
-var matchFoodByLocation = function (num, data) {
+var matchFoodByLocation = function (webot, num, data) {
 	var name = foodLocation[num-1];
 	var data = data['data'];
 	var food_array = new Array();
@@ -78,9 +81,16 @@ var matchFoodByLocation = function (num, data) {
 				food_info.latitude = data[i]['latitude'];
 				food_info.longitude = data[i]['longitude'];
 				var now = moment_timezone().tz('America/Toronto').format('dddd').toLowerCase();
-				var open = data[i]['opening_hours'][now]['opening_hour'];
-				var close = data[i]['opening_hours'][now]['closing_hour'];
-				var reply = food_info.name+': '+open+' - '+close;
+				if (data[i]['opening_hours'][now]['is_closed'] == true) {
+					reply = food_info.name+utils.localizedText(webot, {
+						'en_us' : ': Closed for Today My Friend!',
+						'zh_cn' : ': 今日不开门哦亲！'
+					});
+				} else {
+					var open = data[i]['opening_hours'][now]['opening_hour'];
+					var close = data[i]['opening_hours'][now]['closing_hour'];
+					var reply = food_info.name+': '+open+' - '+close;
+				}
 				food_array.push(reply);
 			}
 		})(i);
@@ -185,7 +195,7 @@ module.exports = function(webot) {
 				next(null, res);
 			} else {
 				uwapi.getjson('foodservices/locations', function(data) {
-		 		res = matchFoodByName(num, data);
+		 		res = matchFoodByName(webot, num, data);
 		 		info.rewait();
 				next(null, res);
 				});
@@ -212,7 +222,7 @@ module.exports = function(webot) {
 				next(null, res);
 			} else {
 				uwapi.getjson('foodservices/locations', function(data) {
-		 		res = matchFoodByLocation(num, data);
+		 		res = matchFoodByLocation(webot, num, data);
 		  	info.rewait();
 		  	next(null, res);
 				});
