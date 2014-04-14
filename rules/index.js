@@ -39,23 +39,26 @@ module.exports = exports = function(webot){
     },
     handler: function(info, next){
       var reply_cn = {
-        title: '感谢关注「微卢」',
+        title: '感谢关注「微卢」\n输入「Help」查看指令列表',
         pic: 'http://i.imgur.com/YWiWlYj.png?1?9930',
         url: 'http://team-welooba.github.io/WeLoo',
         description: [
-          '饿了吗？来这里看看吃什么吧',
-          '要期末了吗？来这里看看在哪儿考吧',
-          '无聊了吗？来这里猜猜数字吧\n',
-          '输入「Help」查看指令列表',
+          '饿了吗？来这里看看吃什么吧!',
+          '要期末了吗？来这里看看在哪儿考吧!',
+          '无聊了吗？来这里猜猜数字吧!\n',
+          '输入「Help」查看指令列表\n',
           '平台仍在测试中，欢迎大家多提意见',
           '点击「查看全文」至GitHub源代码页'].join('\n')
       };
       var reply_en = {
-        title: 'Welcome to 「WeLoo」',
+        title: 'Welcome to 「WeLoo」\nEnter「Help」to Start',
         pic: 'http://i.imgur.com/YWiWlYj.png?1?9930',
         url: 'http://team-welooba.github.io/WeLoo',
         description: [
-          'Enter「Help」to Start',
+          'Hungry? We can help you!',
+          'Final time? We can help you!',
+          'Feel boring? We can help you!\n',
+          'Enter「Help」to Start\n',
           'Click「Read All」to WeLoo GitHub Page'
         ].join('\n')
       };
@@ -75,9 +78,9 @@ module.exports = exports = function(webot){
         title: '指令列表',
         description: [
           '你可以试试以下指令:',
+          '「Lan」: 设置公众平台语言',
           '「Exam」: 查询期末考试时间与地点',
           '「Food」: 查询学校用餐地点与时间',
-          '「Lan」 : 设置公众平台语言',
           '「Help」: 重新查看本指令界面',
           '「Weather」: 查询当前天气情况',
         ].join('\n')
@@ -86,9 +89,9 @@ module.exports = exports = function(webot){
         title: 'Command List',
         description: [
           'WeLoo Command List:',
+          '「Lan」: Set Account Language',
           '「Exam」: Check Final Ecam Schedule',
           '「Food」: Food Services Open Hours',
-          '「Lan」 : Set Account Language',
           '「Help」: Read This Message Again',
           '「Weather」: Waterloo Current Weather'
         ].join('\n')
