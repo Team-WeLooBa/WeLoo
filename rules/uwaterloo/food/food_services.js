@@ -5,7 +5,8 @@ var moment_timezone = require('moment-timezone');
 // foodName and foodPic are corresponding to each other
 var foodName = ['Tim Hortons','Bon Appétit','Browsers Café','ML’s Coffee Shop','Brubakers',
 								'Williams Fresh Cafe','CEIT Café','Eye Opener Café','Liquid Assets Cafe','Subway',
-								'Festival Fare','Mudie’s','PAS Lounge','Pastry Plus','REVelation'];
+								'Mudie’s','PAS Lounge','Pastry Plus','REVelation','Campus Bubble','Wasabi',
+								'International News'];
 
 var foodPic = ['https://uwaterloo.ca/food-services/sites/ca.food-services/files/tims.gif',
 							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/BA.gif',
@@ -17,11 +18,13 @@ var foodPic = ['https://uwaterloo.ca/food-services/sites/ca.food-services/files/
 							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/eye_opener.gif',
 							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/la.gif',
 							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/subway.gif',
-							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/festivalfare.gif',
 							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/untitled-3-01.png',
 							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/pas.gif',
 							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/pastryplus.gif',
-							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/revelation.gif.gif',]
+							 'https://uwaterloo.ca/food-services/sites/ca.food-services/files/revelation.gif.gif',
+							 'https://pilots.uwaterloo.ca/feds/sites/ca.feds/files/commercial-services-pages-logos-cb.png',
+							 'https://pilots.uwaterloo.ca/feds/sites/ca.feds/files/commercial-services-pages-logos-wasabi.png',
+							 'https://pilots.uwaterloo.ca/feds/sites/ca.feds/files/commercial-services-pages-logos-in.png']
 
 // Independent from foodName and foodPic
 var foodLocation = ['Davis Centre - DC','Dana Porter Library - DP','Student Life Centre - SLC',
@@ -30,7 +33,7 @@ var foodLocation = ['Davis Centre - DC','Dana Porter Library - DP','Student Life
 										'Village 1 - V1','PAS Building - PAS','B.C. Matthews Hall - BMH',
 										'Needles Hall - NH','Tatham Centre - TC','Ron Eydt Village - REV'];
 
-var matchFoodByName = function (num, data) {
+var matchFoodByName = function (webot, num, data) {
 	var name = foodName[num-1];
 	var data = data['data'];
 	var food_array = new Array();
@@ -39,13 +42,20 @@ var matchFoodByName = function (num, data) {
 			var outlet_name = data[i]['outlet_name'].split('-');
 			if (name.match(outlet_name[0].trim())) {
 				var food_info = new Object();
-				food_info.loc = outlet_name[1]+' ('+data[i]['building']+')';
+				food_info.loc = data[i]['building'];
 				food_info.latitude = data[i]['latitude'];
 				food_info.longitude = data[i]['longitude'];
 				var now = moment_timezone().tz('America/Toronto').format('dddd').toLowerCase();
-				var open = data[i]['opening_hours'][now]['opening_hour'];
-				var close = data[i]['opening_hours'][now]['closing_hour'];
-				var reply = food_info.loc+': '+open+' - '+close;
+				if (data[i]['opening_hours'][now]['is_closed'] == true) {
+					reply = food_info.loc+utils.localizedText(webot, {
+						'en_us' : ': Closed for Today My Friend!',
+						'zh_cn' : ': 今日不开门哦亲！'
+					});
+				} else {
+					var open = data[i]['opening_hours'][now]['opening_hour'];
+					var close = data[i]['opening_hours'][now]['closing_hour'];
+					var reply = food_info.loc+': '+open+' - '+close;
+				}
 				food_array.push(reply);
 			}
 		})(i);
@@ -58,7 +68,7 @@ var matchFoodByName = function (num, data) {
 	return res;
 }
 
-var matchFoodByLocation = function (num, data) {
+var matchFoodByLocation = function (webot, num, data) {
 	var name = foodLocation[num-1];
 	var data = data['data'];
 	var food_array = new Array();
@@ -71,9 +81,16 @@ var matchFoodByLocation = function (num, data) {
 				food_info.latitude = data[i]['latitude'];
 				food_info.longitude = data[i]['longitude'];
 				var now = moment_timezone().tz('America/Toronto').format('dddd').toLowerCase();
-				var open = data[i]['opening_hours'][now]['opening_hour'];
-				var close = data[i]['opening_hours'][now]['closing_hour'];
-				var reply = food_info.name+': '+open+' - '+close;
+				if (data[i]['opening_hours'][now]['is_closed'] == true) {
+					reply = food_info.name+utils.localizedText(webot, {
+						'en_us' : ': Closed for Today My Friend!',
+						'zh_cn' : ': 今日不开门哦亲！'
+					});
+				} else {
+					var open = data[i]['opening_hours'][now]['opening_hour'];
+					var close = data[i]['opening_hours'][now]['closing_hour'];
+					var reply = food_info.name+': '+open+' - '+close;
+				}
 				food_array.push(reply);
 			}
 		})(i);
@@ -178,7 +195,7 @@ module.exports = function(webot) {
 				next(null, res);
 			} else {
 				uwapi.getjson('foodservices/locations', function(data) {
-		 		res = matchFoodByName(num, data);
+		 		res = matchFoodByName(webot, num, data);
 		 		info.rewait();
 				next(null, res);
 				});
@@ -205,7 +222,7 @@ module.exports = function(webot) {
 				next(null, res);
 			} else {
 				uwapi.getjson('foodservices/locations', function(data) {
-		 		res = matchFoodByLocation(num, data);
+		 		res = matchFoodByLocation(webot, num, data);
 		  	info.rewait();
 		  	next(null, res);
 				});
