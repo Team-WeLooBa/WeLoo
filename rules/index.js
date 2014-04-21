@@ -30,7 +30,7 @@ module.exports = exports = function(webot){
   webot.loads('./weather/weather');
   webot.loads('./uwaterloo/food/food_services');
   webot.loads('./eatWhat/eat_what');
-  // webot.loads('language/set_language');
+  webot.loads('language/set_language');
 
   webot.set({
     description: 'Welcome page',
@@ -96,10 +96,12 @@ module.exports = exports = function(webot){
           '「Weather」: Waterloo Current Weather'
         ].join('\n')
       };
-      var reply = utils.localizedText(webot,
+      utils.localizedText(info,
         {
           'en_us' : reply_en,
           'zh_cn' : reply_cn
+        }, function(text) {
+          next(null,text);
         });
       next(null, reply);
     }
@@ -129,12 +131,14 @@ module.exports = exports = function(webot){
          webot.config.lang = "en_us"
        }
          // info.wait("language");
-         var reply = utils.localizedText(webot, 
+         utils.localizedText(info, 
         {
           'en_us' : 'Welcome WeLoo! use \'help\' to get more information',
           'zh_cn' : '欢迎使用微信公众平台,输入Help获取帮助'
+        }, function(reply) {
+          next(null, reply);
         })
-         next(null, reply);
+         
         }
       });
     });
@@ -443,7 +447,6 @@ function distance(lat1, lon1, lat2, lon2, unit) {
       var gm = require('googlemaps');
       var util = require('util');
       var data;
-      var output = "";
       var address = "";
       var s = info.param.lat.toString();
       var distance_to_slc_tim = Math.ceil(dis);
@@ -451,23 +454,26 @@ function distance(lat1, lon1, lat2, lon2, unit) {
       s += info.param.lng.toString();
        gm.reverseGeocode(s, function(err, data){
         if(data.results.length<1){
-          output = utils.localizedText(webot, 
-        {
-          'en_us' : "no such address. I am sorry buddy!",
-          'zh_cn' : '对不起，没有这个地址'
-        })
-        }
-        else{
+          utils.localizedText(webot, 
+                    {
+                      'en_us' : "no such address. I am sorry buddy!",
+                      'zh_cn' : '对不起，没有这个地址'
+                    }, function(output) {
+                      next(null, output);
+                    });
+        } else{
           address = data.results[0].formatted_address;
           // log("address: %s", output);
 
-          output = utils.localizedText(webot, 
-        {
-          'en_us' : "your current location is: "+address+"\n"+"Distance between you and SLC Tim Hortons is: "+ distance_to_slc_tim+" m",
-          'zh_cn' : "您现在所在位置: "+address+"\n"+"您距离SLC的Tim Hortons的距离是: "+ distance_to_slc_tim+" m"
-        })
+          utils.localizedText(webot, 
+                    {
+                      'en_us' : "your current location is: "+address+"\n"+"Distance between you and SLC Tim Hortons is: "+ distance_to_slc_tim+" m",
+                      'zh_cn' : "您现在所在位置: "+address+"\n"+"您距离SLC的Tim Hortons的距离是: "+ distance_to_slc_tim+" m"
+                    }, function(output) {
+                        next(null, output);
+                    });
         }
-          next(null, output);
+          
         });
       // geo2loc(info.param, function(err, location, data) {
       //   location = location || info.label;
@@ -644,10 +650,12 @@ function distance(lat1, lon1, lat2, lon2, unit) {
     console.log('unhandled message: %s', info.param.recognition);
     info.flag = true;
     var output = '';
-    output = utils.localizedText(webot, {
+    utils.localizedText(info, {
       'en_us': 'Sorry, but I don\'t understand "' + info.text + '".',
       'zh_cn': '你发送了「' + info.text + '」,可惜我太笨了,听不懂. 发送: help 查看可用的指令'
+    }, function(output) {
+      next(null, output);
     });
-    next(null, output);
+    
   });
 };

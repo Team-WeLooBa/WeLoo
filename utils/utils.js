@@ -1,17 +1,27 @@
 var commands = [/^(exam|考试)/i, /^(weather|天气)/i, /^(food|用餐)/i, /^(language|语言)/i, /^(help|帮助)/i, /^(吃啥)/];
 
+var redis_client = require('../utils/redis');
+
+var en_lang_set_ids = redis_client.en_lang_set_ids;
+var cn_lang_set_ids = redis_client.cn_lang_set_ids;
+
+var commands = [/^(exam|考试)/i, /^(weather|天气)/i, /^(food|用餐)/i, /^(language|语言)/i, /^(help|帮助)/i];
+
+
 exports.isEmptyObject = function (obj) {
 	return !Object.keys(obj).length;
 };
 
-exports.localizedText = function (webot, keyValuePair) {
-	if (webot.config.lang === 'zh_cn') {
-	 	return keyValuePair.zh_cn;
-	} else if (webot.config.lang === 'en_us') {
-		return keyValuePair.en_us;
-	} else {
-		return keyValuePair.en_us; //default fallback
-	}
+exports.localizedText = function (info, keyValuePair, callback) {
+	var isEn = true;
+	redis_client.redis.sismember(en_lang_set_ids, info.uid, function(err, reply) {
+		isEn = reply;
+		if (!isEn) {
+		 	callback(keyValuePair.zh_cn);
+		} else {
+			callback(keyValuePair.en_us);
+		}
+	});
 }
 
 exports.sanitizeInfo = function (info) {

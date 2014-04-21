@@ -1,6 +1,6 @@
 var uwapi = require('../../utils/uwapi');
 var utils = require('../../utils/utils');
-// var redis_client = require('../../utils/redis').initialize();
+var redis_client = require('../../utils/redis');
 var mongo = require('mongodb');
 
 var mongoUri = process.env.MONGO_TEST_URI || process.env.MONGO_PROD_URI; //test URI will override PROD URI!
@@ -9,8 +9,8 @@ var mongoUri = process.env.MONGO_TEST_URI || process.env.MONGO_PROD_URI; //test 
 var collecions = ["language"];
 
 
-var en_lang_set_ids = 'en_lang';
-var cn_lang_set_ids = 'cn_lang';
+var en_lang_set_ids = redis_client.en_lang_set_ids;
+var cn_lang_set_ids = redis_client.cn_lang_set_ids;
 
 
 
@@ -29,14 +29,14 @@ module.exports = function(webot) {
 
 		var choice = Number(info.text);
 
-		if (choice > 1 || choice < 0) {
+		if (choice > 2 || choice < 1) {
 			next();
 		} else {
 
 			var lang_set_ids_to_add = choice===1 ? en_lang_set_ids : cn_lang_set_ids;
 			var lang_set_ids_to_remove = choice===1 ? cn_lang_set_ids : en_lang_set_ids;
 		
-			redis_client.sismember(lang_set_ids_to_add, info.uid, function(err, reply) {
+			redis_client.redis.sismember(lang_set_ids_to_add, info.uid, function(err, reply) {
 				if (err) {
 					console.log("redis error: " + err.toString());
 					next();
@@ -44,22 +44,22 @@ module.exports = function(webot) {
 					if (parseInt(reply) === 1) {
 						next(null, "欢迎使用微信公众平台,输入Help获取帮助");
 					} else { // change lang
-						var removed = redis_client.srem(lang_set_ids_to_remove, info.uid, function(err, reply) { // remove the user from chinese lang set
+						var removed = redis_client.redis.srem(lang_set_ids_to_remove, info.uid, function(err, reply) { // remove the user from chinese lang set
 							if (err) {
 								console.log("redis error: " + err.toString());
 								next();
 							} else {
-								console.log("redis_client.srem(lang_set_ids_to_remove, info.uid) reply: " + reply);
-								redis_client.sadd(lang_set_ids_to_add, info.uid, function(err, reply) {
+								console.log("redis_client.redis.srem(lang_set_ids_to_remove, info.uid) reply: " + reply);
+								redis_client.redis.sadd(lang_set_ids_to_add, info.uid, function(err, reply) {
 									if (err) {
 										console.log("redis error: " + err.toString());
 										next();
 									} else {
-										console.log("redis_client.sadd(lang_set_ids_to_add, info.uid) reply: " + reply);
-										redis_client.smembers(en_lang_set_ids, function(err, cb) {
+										console.log("redis_client.redis.sadd(lang_set_ids_to_add, info.uid) reply: " + reply);
+										redis_client.redis.smembers(en_lang_set_ids, function(err, cb) {
 											console.log("en_lang_set_ids: reply: " + cb.toString());
 										});
-										redis_client.smembers(cn_lang_set_ids, function(err, cb) {
+										redis_client.redis.smembers(cn_lang_set_ids, function(err, cb) {
 											console.log("cn_lang_set_ids: reply: " + cb.toString());
 										});
 										next(null, "Welcome WeLoo! use \'help\' to get more information");
